@@ -3,6 +3,10 @@ import React, { Component } from "react";
 //Components
 import GameRow from "./GameRow";
 
+//Redux
+import { connect } from "react-redux";
+import * as actionCreators from "./redux/actions";
+
 class GamePage extends Component {
   render() {
     return (
@@ -69,36 +73,32 @@ class GamePage extends Component {
           <div>
             <GameRow
               color={this.props.colors}
-              changeColors={this.props.changeColors}
-              index={0}
+              changeColors={this.props.changeColors(0)}
             />
           </div>
           <div>
             <GameRow
               color={this.props.colors}
-              changeColors={this.props.changeColors}
-              index={1}
+              changeColors={this.props.changeColors(1)}
             />
           </div>
           <div>
             <GameRow
               color={this.props.colors}
-              changeColors={this.props.changeColors}
-              index={2}
+              changeColors={this.props.changeColors(2)}
             />
           </div>
           <div>
             <GameRow
               color={this.props.colors}
-              changeColors={this.props.changeColors}
-              index={3}
+              changeColors={this.props.changeColors(3)}
             />
           </div>
 
           <button
             className="button mx-3"
             onClick={() => {
-              this.props.attempt();
+              this.props.attempt(this.props.indexes);
               this.props.validation();
             }}
           >
@@ -110,4 +110,24 @@ class GamePage extends Component {
   }
 }
 
-export default GamePage;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    attemptValidations: state.attemptValidations,
+    attemptColors: state.attemptColors,
+    attemps: state.attempts,
+    colors: state.colors
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    attempt: indexes => dispatch(actionCreators.attempt(indexes)),
+    validation: () => dispatch(actionCreators.attempt()),
+    changeColors: index => dispatch(actionCreators.changeColors(index))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GamePage);
