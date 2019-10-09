@@ -1,66 +1,113 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 
 //Components
-import GameRow from './GameRow'
+import GameRow from "./GameRow";
 
 class GamePage extends Component {
-    render(){
-
+  render() {
     return (
-            <>
+      <>
+        <div className="row my-3 mx-5">
+          <h2> Attempts left: {13 - this.props.attempts} </h2>
+        </div>
 
-            <div className="row my-3 mx-5" >
-            <h2> Attempts left: {13 - this.props.attempts} </h2>
-            </div>
+        <div className="row my-3">
+          <div className="mx-5">
+            {this.props.attemptColors[0]} {this.props.attemptValidations[0]}
+          </div>
+          <div className="mx-5">
+            {this.props.attemptColors[6]} {this.props.attemptValidations[6]}
+          </div>
+        </div>
 
-            <div className="row my-3" > 
-            <div className="mx-5"> {this.props.attempt1Colors} {this.props.attempt1Validation} </div>
-            <div className="mx-5"> {this.props.attempt7Colors} {this.props.attempt7Validation} </div>
-            </div>
+        <div className="row my-3">
+          <div className="mx-5">
+            {this.props.attemptColors[1]} {this.props.attemptValidations[1]}
+          </div>
+          <div className="mx-5">
+            {this.props.attemptColors[7]} {this.props.attemptValidations[7]}
+          </div>
+        </div>
 
-            <div className="row my-3" > 
-            <div className="mx-5"> {this.props.attempt2Colors} {this.props.attempt2Validation} </div>
-            <div className="mx-5"> {this.props.attempt8Colors} {this.props.attempt8Validation} </div>
-            </div>
+        <div className="row my-3">
+          <div className="mx-5">
+            {this.props.attemptColors[2]} {this.props.attemptValidations[2]}
+          </div>
+          <div className="mx-5">
+            {this.props.attemptColors[8]} {this.props.attemptValidations[8]}
+          </div>
+        </div>
 
-            <div className="row my-3" > 
-            <div className="mx-5"> {this.props.attempt3Colors} {this.props.attempt3Validation} </div>
-            <div className="mx-5"> {this.props.attempt9Colors} {this.props.attempt9Validation} </div>
-            </div>
+        <div className="row my-3">
+          <div className="mx-5">
+            {this.props.attemptColors[3]} {this.props.attemptValidations[3]}
+          </div>
+          <div className="mx-5">
+            {this.props.attemptColors[9]} {this.props.attemptValidations[9]}
+          </div>
+        </div>
 
-            <div className="row my-3" > 
-            <div className="mx-5"> {this.props.attempt4Colors} {this.props.attempt4Validation} </div>
-            <div className="mx-5"> {this.props.attempt10Colors} {this.props.attempt10Validation} </div>
-            </div>
+        <div className="row my-3">
+          <div className="mx-5">
+            {this.props.attemptColors[4]} {this.props.attemptValidations[4]}
+          </div>
+          <div className="mx-5">
+            {this.props.attemptColors[10]} {this.props.attemptValidations[10]}
+          </div>
+        </div>
 
-            <div className="row my-3" > 
-            <div className="mx-5"> {this.props.attempt5Colors} {this.props.attempt5Validation} </div>
-            <div className="mx-5"> {this.props.attempt11Colors} {this.props.attempt11Validation} </div>
-            </div>
+        <div className="row my-3">
+          <div className="mx-5">
+            {this.props.attemptColors[5]} {this.props.attemptValidations[5]}
+          </div>
+          <div className="mx-5">
+            {this.props.attemptColors[11]} {this.props.attemptValidations[11]}
+          </div>
+        </div>
 
-            <div className="row my-3" > 
-            <div className="mx-5"> {this.props.attempt6Colors} {this.props.attempt6Validation} </div>
-            <div className="mx-5"> {this.props.attempt12Colors} {this.props.attempt12Validation} </div>
-            </div>
+        <div className="row mx-5">
+          <div>
+            <GameRow
+              color={this.props.colors}
+              changeColors={this.props.changeColors}
+              index={0}
+            />
+          </div>
+          <div>
+            <GameRow
+              color={this.props.colors}
+              changeColors={this.props.changeColors}
+              index={1}
+            />
+          </div>
+          <div>
+            <GameRow
+              color={this.props.colors}
+              changeColors={this.props.changeColors}
+              index={2}
+            />
+          </div>
+          <div>
+            <GameRow
+              color={this.props.colors}
+              changeColors={this.props.changeColors}
+              index={3}
+            />
+          </div>
 
-
-
-
-
-
-            <div className="row mx-5" > 
-            <div> <GameRow color={this.props.color1} changeColor={this.props.changeColor1}/></div>
-            <div> <GameRow color={this.props.color2} changeColor={this.props.changeColor2}/></div>
-            <div> <GameRow color={this.props.color3} changeColor={this.props.changeColor3}/></div>
-            <div> <GameRow color={this.props.color4} changeColor={this.props.changeColor4}/></div>
-            <button className="button mx-3" onClick={() => {this.props.attempt(); this.props.validation();} }> SUBMIT </button>
-
-            </div>
-
-            </>
-        );
-    }
+          <button
+            className="button mx-3"
+            onClick={() => {
+              this.props.attempt();
+              this.props.validation();
+            }}
+          >
+            SUBMIT
+          </button>
+        </div>
+      </>
+    );
   }
+}
 
 export default GamePage;
-

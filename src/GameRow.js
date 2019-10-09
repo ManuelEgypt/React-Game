@@ -1,14 +1,13 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 
 class GameRow extends Component {
-    render(){
-
+  render() {
     return (
-        
-        <h1 onClick={this.props.changeColor}> {this.props.color} {this.props.validation} </h1>
-        
-        );
-    }
+      <h1 onClick={() => this.props.changeColors(this.props.index)}>
+        {this.props.color[this.props.index]} {this.props.validation}
+      </h1>
+    );
   }
+}
 
 export default GameRow;
