@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import registerServiceWorker from "./registerServiceWorker";
+import * as serviceWorker from "./serviceWorker";
 import "./App.css";
 // Styling
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
+
 
 // Components
 import App from "./App";
@@ -20,4 +20,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
-registerServiceWorker();
+serviceWorker.unregister();

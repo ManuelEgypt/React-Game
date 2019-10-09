@@ -20,14 +20,22 @@ export const attempt = indexes => {
   };
 };
 
-export const validation = () => {
+export const validation = (indexes) => {
   return {
-    type: actionTypes.VALIDATION
+    type: actionTypes.VALIDATION,
+    payload:indexes
+
   };
 };
 
 export const generate = () => {
   return {
     type: actionTypes.GENERATE_PATTERN
+  };
+};
+
+export const checkLose = () => {
+  return {
+    type: actionTypes.CHECK_LOSE
   };
 };

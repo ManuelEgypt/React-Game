@@ -9,7 +9,9 @@ import WinPage from "./WinPage";
 import { connect } from "react-redux";
 
 class App extends Component {
+
   render() {
+    console.log(this.props)
     let currentPage = () => {
       if (this.props.mode === "inProgress") {
         return <GamePage />;
@@ -28,7 +30,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    mode: state.mode
+    mode: state.rootGame.mode
   };
 };
 

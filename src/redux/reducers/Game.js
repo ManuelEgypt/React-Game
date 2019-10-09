@@ -1,5 +1,6 @@
 import * as actionTypes from "../actions/actionTypes";
 import img from "../../data";
+import React from "react";
 
 let validationsList = [];
 let check = [];
@@ -49,6 +50,7 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.PLAY_AGAIN:
       return {
+        ...state,
         colors: [
           <img width="50" height="50" src={img[0].imageUrl} />,
           <img width="50" height="50" src={img[0].imageUrl} />,
@@ -90,7 +92,7 @@ const reducer = (state = initialState, action) => {
       };
 
     case actionTypes.CHANGE_COLORS:
-      index = action.payload;
+      let index = action.payload;
       if (state.indexes[index] < 7) {
         const newIndexes = state.indexes;
         let newIndex = newIndexes[index]++;
@@ -99,6 +101,7 @@ const reducer = (state = initialState, action) => {
           <img width="50" height="50" src={img[newIndex].imageUrl} />
         );
         return {
+          ...state,
           indexes: [...state.indexes],
           colors: [...state.colors]
         };
@@ -108,17 +111,22 @@ const reducer = (state = initialState, action) => {
         const newColors = state.colors;
         newColors[index] = <img width="50" height="50" src={img[1].imageUrl} />;
         return {
+          ...state,
           indexes: [...state.indexes],
           colors: [...state.colors]
         };
       }
 
     case actionTypes.ATTEMPT:
-      indexes = action.payload;
+        let indexes= []
+      if(action.payload) {
+        indexes = action.payload
+      }
+      
       let findDuplicates = indexes =>
         indexes.filter((item, index) => indexes.indexOf(item) != index);
-      let isThereDublicates = findDuplicates(state.indexes);
-      if (isThereDublicates.length === 0 && !state.indexes.includes(1)) {
+      let isThereDublicates = findDuplicates(indexes);
+      if (isThereDublicates.length === 0 && !indexes.includes(1)) {
         console.log("PASS");
         const attemptsList = state.colors;
         let no = state.attempts;
@@ -126,74 +134,82 @@ const reducer = (state = initialState, action) => {
         newAttemptColors[no] = attemptsList;
         console.log();
         return {
+          ...state,
           attemptColors: [...state.attemptColors],
           attempts: no + 1
         };
-      } else if (isThereDublicates.length !== 0 && !state.indexes.includes(1)) {
+      } else if (isThereDublicates.length !== 0 && !indexes.includes(1)) {
         alert(`Don't repeat a color!`);
       }
-      if (state.attempts === 12) {
-        return {
-          mode: "Lose"
-        };
-      }
+      
+      
 
     case actionTypes.VALIDATION:
-      indexes = action.payload;
-      let findDuplicates = indexes =>
-        indexes.filter((item, index) => indexes.indexOf(item) != index);
-      let isThereDublicates = findDuplicates(this.state.indexes);
-      if (isThereDublicates.length === 0 && !state.indexes.includes(1)) {
-        state.indexes.map(index => validationsList.push(index));
-      }
-      let no = state.attempts;
-      check = [];
-      let sortedCheckList = [];
-      this.state.indexes.forEach((input, choiceIndex) => {
-        randomAnswer.forEach((ans, ansIndex) => {
-          if (input === ans) {
-            if (choiceIndex === ansIndex) {
-              check.push("vr");
-            } else {
-              check.push("r");
-            }
-          }
-        });
-      });
+        let inx= []
+        if(action.payload) {
+          inx = action.payload
+        }
+        
+        let findDuplicates2 = indexes =>
+          indexes.filter((item, index) => indexes.indexOf(item) != index);
+        let isThereDublicates2 = findDuplicates2(inx);
+  if (isThereDublicates2.length === 0 && !state.indexes.includes(1)) {
+    state.indexes.map(index => validationsList.push(index));
+  }
 
-      if (
-        check.length === 4 &&
-        check[0] == "vr" &&
-        check[1] == "vr" &&
-        check[2] == "vr" &&
-        check[3] == "vr"
-      ) {
-        return {
-          mode: "Win"
-        };
-      } else {
-        let redColor = <img width="20" height="20" src={img[1].imageUrl} />;
-        let greenColor = <img width="20" height="20" src={img[3].imageUrl} />;
-        console.log(check);
-        let sortedCheck = check.sort().reverse();
-        sortedCheck.forEach(checkValue => {
-          if (checkValue === "vr") {
-            sortedCheckList.push(greenColor);
-          }
-        });
-        sortedCheck.forEach(checkValue => {
-          if (checkValue === "r") {
-            sortedCheckList.push(redColor);
-          }
-        });
-        console.log(sortedCheck);
-        console.log(sortedCheckList);
-        const newAttempVaildations = state.attemptValidations;
-        newAttempVaildations[no] = sortedCheckList;
-        return {
-          attemptValidations: [...state.attemptValidations]
-        };
+  let no = state.attempts;
+
+  check = [];
+  let sortedCheckList = [];
+  inx.forEach((input, choiceIndex) => {
+    console.log(randomAnswer)
+    randomAnswer.forEach((ans, ansIndex) => {
+      if (input === ans) {
+        if (choiceIndex === ansIndex) {
+          check.push("vr");
+        } else {
+          check.push("r");
+        }
       }
+    });
+  });
+
+  if (
+    check.length === 4 &&
+    check[0] == "vr" &&
+    check[1] == "vr" &&
+    check[2] == "vr" &&
+    check[3] == "vr"
+  ) {
+    return{
+      ...state,
+      mode: "Win"
+    };
+  } else {
+    let redColor = <img width="20" height="20" src={img[1].imageUrl} />;
+    let greenColor = <img width="20" height="20" src={img[3].imageUrl} />;
+    let sortedCheck = check.sort().reverse();
+    sortedCheck.forEach(checkValue => {
+      if (checkValue === "vr") {
+        sortedCheckList.push(greenColor);
+      }
+    });
+    sortedCheck.forEach(checkValue => {
+      if (checkValue === "r") {
+        sortedCheckList.push(redColor);
+      }
+    });
+    console.log(sortedCheck);
+    console.log(sortedCheckList);
+    const newAttempVaildations = state.attemptValidations;
+    newAttempVaildations[no] = sortedCheckList;
+    return{
+      ...state,
+      attemptValidations: [...state.attemptValidations]
+    };
+    
+  }
+
     case actionTypes.GENERATE_PATTERN:
       randomAnswer = [];
       while (randomAnswer.length < 4) {
@@ -203,7 +219,13 @@ const reducer = (state = initialState, action) => {
           randomAnswer.push(Math.round(a * 10));
         }
       }
-      return randomAnswer;
+      case actionTypes.CHECK_LOSE:
+          if (state.attempts === 12) {
+            return {
+              ...state,
+              mode: "Lose"
+            };
+          }
     default:
       return state;
   }

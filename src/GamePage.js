@@ -8,6 +8,11 @@ import { connect } from "react-redux";
 import * as actionCreators from "./redux/actions";
 
 class GamePage extends Component {
+  componentDidMount() {
+    {
+      this.props.generate();
+    }
+  }
   render() {
     return (
       <>
@@ -73,25 +78,29 @@ class GamePage extends Component {
           <div>
             <GameRow
               color={this.props.colors}
-              changeColors={this.props.changeColors(0)}
+              changeColors={this.props.changeColors}
+              index={0}
             />
           </div>
           <div>
             <GameRow
               color={this.props.colors}
-              changeColors={this.props.changeColors(1)}
+              changeColors={this.props.changeColors}
+              index={1}
             />
           </div>
           <div>
             <GameRow
               color={this.props.colors}
-              changeColors={this.props.changeColors(2)}
+              changeColors={this.props.changeColors}
+              index={2}
             />
           </div>
           <div>
             <GameRow
               color={this.props.colors}
-              changeColors={this.props.changeColors(3)}
+              changeColors={this.props.changeColors}
+              index={3}
             />
           </div>
 
@@ -99,7 +108,8 @@ class GamePage extends Component {
             className="button mx-3"
             onClick={() => {
               this.props.attempt(this.props.indexes);
-              this.props.validation();
+              this.props.validation(this.props.indexes);
+              this.props.checkLose();
             }}
           >
             SUBMIT
@@ -112,18 +122,21 @@ class GamePage extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    attemptValidations: state.attemptValidations,
-    attemptColors: state.attemptColors,
-    attemps: state.attempts,
-    colors: state.colors
+    attemptValidations: state.rootGame.attemptValidations,
+    attemptColors: state.rootGame.attemptColors,
+    attemps: state.rootGame.attempts,
+    colors: state.rootGame.colors,
+    indexes: state.rootGame.indexes
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     attempt: indexes => dispatch(actionCreators.attempt(indexes)),
-    validation: () => dispatch(actionCreators.attempt()),
-    changeColors: index => dispatch(actionCreators.changeColors(index))
+    validation: indexes => dispatch(actionCreators.validation(indexes)),
+    changeColors: index => dispatch(actionCreators.changeColors(index)),
+    generate: () => dispatch(actionCreators.generate()),
+    checkLose:()=>dispatch(actionCreators.checkLose())
   };
 };
 

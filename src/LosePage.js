@@ -1,5 +1,9 @@
 import React,{Component} from "react";
 
+//Redux
+import { connect } from "react-redux";
+import * as actionCreators from "./redux/actions";
+
 class LosePage extends Component {
     render(){
 
@@ -14,5 +18,14 @@ class LosePage extends Component {
     }
   }
 
-export default LosePage;
+  const mapDispatchToProps = dispatch => {
+    return {
+      playAgain: () => dispatch(actionCreators.playAgain()),
+    };
+  };
+  
+  export default connect(
+    null,
+    mapDispatchToProps
+  )(LosePage);
 
